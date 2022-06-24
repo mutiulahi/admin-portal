@@ -264,10 +264,29 @@ include 'islogin.php';
                             <hr class="horizontal gray-light my-2">
                             <div class="row justify-content-between">
                             <div class="col-lg-6 mx-auto "> 
-                                    <button class="btn btn-success" >Payment 300k</button>
+                                    <!-- <button class="btn btn-success" >Payment 300k</button> -->
+                                    <?php
+                                         if ($add_status == 1 and $acceptance_found	== 1) {
+                                            echo '<button class="btn btn-success" disabled>Payment 30k</button>';
+                                        }else {
+                                            echo ' <button type="button" class="btn btn-success" id="money" value="30000" data-toggle="modal" data-target="#admission">
+                                            Payment 30k
+                                            </button>';
+                                        }
+                                    ?>
                                 </div>
                                 <div class="col-lg-6 mx-auto"> 
-                                    <button class="btn btn-secondary">Admission Letter</button>
+                                <?php
+                                     if ($add_status == 1 and $acceptance_found	!= 1) {
+                                        echo '
+                                        <form action="admission_letter.php" method="POST">
+                                            <button type="submit" class="btn btn-secondary" name="create_pdf">Admission Letter</button>
+                                        </form>';
+                                    }else {
+                                        echo '<button class="btn btn-secondary" disabled>Admission Letter</button>';
+                                    }
+                                ?>
+                                    
                                 </div>
                                 
                             </div>
@@ -275,7 +294,7 @@ include 'islogin.php';
                     </div>
                 </div> 
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="admission" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -285,18 +304,19 @@ include 'islogin.php';
                             </button>
                         </div>
                         <div class="modal-body">
-                            You about to pay for your application form 
+                            You about to pay for your acceptance fee 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
                             <script src="https://js.paystack.co/v1/inline.js"></script> 
                             <input type="hidden" id="email" value="<?php echo $email; ?>">
-                            <button class="btn btn-success mb-3" type="button" id="payment_type" value="application form" onclick="payWithPaystack()"> Proceed to make Payment <i class="fa fa-arrow-right"></i></button>
+                            <button class="btn btn-success mb-3" type="button" id="payment_type" value="acceptance fee" onclick="payWithPaystack()"> Proceed to make Payment <i class="fa fa-arrow-right"></i></button>
                                                
                         </div>
                         </div>
                     </div>
                 </div>
+
             </div>
             <footer class="footer pt-3  ">
                 <div class="container-fluid">
